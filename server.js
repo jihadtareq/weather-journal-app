@@ -13,13 +13,8 @@ const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-app.use(function (req, res, next) {
-    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8000');
-    next();
-  });
 // Cors for cross origin allowance
 const cors = require('cors');
-
 app.use(cors());
 
 // Initialize the main project folder
@@ -41,7 +36,6 @@ function listening(){
 app.get('/all',getData);
 
 function getData(req,res){
-    res.setHeader('Access-Control-Allow-Origin', '*');
     res.send(projectData);
     console.log(projectData);
 
@@ -55,12 +49,14 @@ function getData(req,res){
       newEntry={
           date:req.body.date,
           temperature:req.body.temp,
-          content:req.body.content
+          content:req.body.content,
       }
      
       weatherData.push(newEntry);
+      projectData.data = weatherData
+      console.log(weatherData);
       res.send(weatherData);
-      console.log(projectData);
+     
 
 
   }
